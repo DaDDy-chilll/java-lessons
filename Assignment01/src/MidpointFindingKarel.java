@@ -6,5 +6,6 @@ public class MidpointFindingKarel extends Karel {
 
     }
 
+
 }
 

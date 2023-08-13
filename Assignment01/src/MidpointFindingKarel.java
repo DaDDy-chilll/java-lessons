@@ -13,8 +13,11 @@ public class MidpointFindingKarel extends Karel {
         putBeeperDown();
         clearRightBeeper();
         clearLeftBeeper();
-        if(rightIsClear()){
+//        if(rightIsClear()){
         cameToCenter();
+//        }
+        if (rightIsClear()){
+            turnAround();
         }
     }
     void cameToCenter(){

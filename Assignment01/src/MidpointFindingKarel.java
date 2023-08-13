@@ -19,7 +19,7 @@ public class MidpointFindingKarel extends Karel {
     }
     void cameToCenter(){
         turnAround();
-        goToBeeper();
+         goToBeeper();
         move();
     }
     void  clearRightBeeper(){

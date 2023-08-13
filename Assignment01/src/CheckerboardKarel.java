@@ -6,25 +6,60 @@ public class CheckerboardKarel extends Karel {
         checker();
     }
     void checker(){
-        if (frontIsBlocked()){
-            goForwardForBlock();
-        }else {
+        if (frontIsClear()){
             goForwardForUnblock();
         }
+
+            goForwardForBlock();
+        while (frontIsBlocked()){
+           if (leftIsClear()){
+               goForwardForBlock();
+           }
+
+        }
+
+
     }
     void goForwardForBlock(){
+
         turnLeft();
-        goForwardForUnblock();
+        if (frontIsClear()){
+            if (leftIsClear()){
+                move();
+                turnLeft();
+                move();
+            }
+        }
+
+           goForwardForUnblock();
+
 //        turnLeft();
     }
     void goForwardForUnblock(){
         while (frontIsClear()) {
-            putBeeper();
-            moveTwoTimes();
+            isPutBeeper();
+
+                moveTwoTimes();
+
         }
+
         if (facingNorth()){
-          turnRight();
+            turnRight();
         }
+
+
+
+    }
+
+    void isPutBeeper(){
+        if (frontIsBlocked()){
+            if (rightIsBlocked()){
+                putBeeper();
+            }
+        }
+            if (noBeepersPresent()){
+                putBeeper();
+            }
 
     }
 
@@ -32,22 +67,26 @@ public class CheckerboardKarel extends Karel {
         move();
         if(frontIsClear()){
             move();
-            if(rightIsBlocked()){
-                putBeeper();
-
-            }
+            print("put ");
+            isPutBeeper();
         }else {
             if (leftIsClear()){
                 goToTop();
             }
         }
-
     }
     void goToTop(){
-        if(facingEast()){
-            topForEast();
+        if (facingNorth()){
+            if (frontIsBlocked()){
+                turnLeft();
+                move();
+            }
         }else {
-            toForWest();
+            if(facingEast()){
+                topForEast();
+            }else {
+                toForWest();
+            }
         }
     }
 
@@ -57,8 +96,6 @@ public class CheckerboardKarel extends Karel {
             move();
             turnLeft();
 
-        }else {
-//            turnLeft();
         }
     }
     void toForWest(){
@@ -70,9 +107,9 @@ public class CheckerboardKarel extends Karel {
 
     }
     void turnRight(){
-        for (int i = 0; i < 3; i++) {
-            turnLeft();
-        }
+            for (int i = 0; i < 3; i++) {
+                turnLeft();
+            }
     }
 
 }

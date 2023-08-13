@@ -3,14 +3,11 @@ import stanford.karel.Karel;
 public class MidpointFindingKarel extends Karel {
 
     public void run() {
-
-           findMid();
-
-
+        findMid();
     }
 
     void findMid(){
-        putBeeperEndOftheSide();
+        putBeeperEachSide();
         turnAround();
         goToBeeper();
         putBeeperDown();
@@ -21,13 +18,9 @@ public class MidpointFindingKarel extends Karel {
         }
     }
     void cameToCenter(){
-
-            turnAround();
-
+        turnAround();
         goToBeeper();
         move();
-        print(" program end");
-
     }
     void  clearRightBeeper(){
        while (frontIsClear()){
@@ -63,7 +56,7 @@ public class MidpointFindingKarel extends Karel {
         goBackWard();
 
     }
-    void putBeeperEndOftheSide(){
+    void putBeeperEachSide(){
         putBeeper();
         while(frontIsClear()){
             move();

@@ -1,115 +1,115 @@
 import stanford.karel.Karel;
 
 public class CheckerboardKarel extends Karel {
-
-    public void run() {
-        checker();
+    public void run(){
+        startCheckerBoard();
     }
-    void checker(){
-        if (frontIsClear()){
-            goForwardForUnblock();
+    void startCheckerBoard(){
+        while (frontIsClear()){
+            goToFrontForEven();
         }
-
-            goForwardForBlock();
-        while (frontIsBlocked()){
-           if (leftIsClear()){
-               goForwardForBlock();
-           }
-
-        }
-
-
-    }
-    void goForwardForBlock(){
-
-        turnLeft();
-        if (frontIsClear()){
-            if (leftIsClear()){
-                move();
-                turnLeft();
-                move();
-            }
-        }
-
-           goForwardForUnblock();
-
-//        turnLeft();
-    }
-    void goForwardForUnblock(){
-        while (frontIsClear()) {
-            isPutBeeper();
-
-                moveTwoTimes();
-
-        }
-
-        if (facingNorth()){
-            turnRight();
-        }
-
-
-
-    }
-
-    void isPutBeeper(){
         if (frontIsBlocked()){
-            if (rightIsBlocked()){
-                putBeeper();
-            }
+            continueOrEnd();
         }
-            if (noBeepersPresent()){
-                putBeeper();
-            }
-
+        changePosition();
     }
 
-    void moveTwoTimes() {
-        move();
-        if(frontIsClear()){
-            move();
-            print("put ");
+    void continueOrEnd(){
+        if (leftIsClear()){
+            turnLeft();
+            if (leftIsBlocked()){
+                goToFrontForEven();
+            }else {
+                changePosition();
+                goToFrontForOdd();
+            }
+        }
+    }
+
+    void goToFrontForEven(){
+        while (frontIsClear()){
             isPutBeeper();
-        }else {
+            move();
+            if (frontIsClear()){
+                move();
+                isPutBeeper();
+            }else {
+              nextLane();
+
+            }
+
+        }
+    }
+
+    void goToFrontForOdd(){
+        while (leftIsClear()){
+                nextLane();
+            while (frontIsClear()){
+                move();
+                goToFrontForEven();
+
+            }
+            if (rightIsBlocked()){
+                turnRight();
+            }
+        }
+
+
+    }
+    void nextLane(){
+        if (facingWest()){
+            if (rightIsClear()){
+                goToTop();
+            }
+        }
+        if (facingEast()){
             if (leftIsClear()){
                 goToTop();
             }
         }
     }
-    void goToTop(){
-        if (facingNorth()){
-            if (frontIsBlocked()){
-                turnLeft();
-                move();
-            }
-        }else {
-            if(facingEast()){
-                topForEast();
-            }else {
-                toForWest();
-            }
+
+    void goToTop() {
+         if (frontIsBlocked()){
+             if (facingWest()){
+                 turnRight();
+                 move();
+                 turnRight();
+             }
+         }
+         if (frontIsBlocked()){
+             if(facingEast()) {
+                 turnLeft();
+                 move();
+                 turnLeft();
+             }
+         }
+
+    }
+
+
+    void isPutBeeper(){
+        if (noBeepersPresent()){
+            putBeeper();
+        }
+
+    }
+
+    void changePosition(){
+        while (notFacingEast()){
+            turnLeft();
         }
     }
 
-    void topForEast(){
-        turnLeft();
-        if (frontIsClear()){
-            move();
+
+
+
+
+    void turnRight(){
+        for (int i = 0; i < 3; i++) {
             turnLeft();
 
         }
-    }
-    void toForWest(){
-        turnRight();
-        if (frontIsClear()){
-            move();
-            turnRight();
-        }
-
-    }
-    void turnRight(){
-            for (int i = 0; i < 3; i++) {
-                turnLeft();
-            }
     }
 
 }

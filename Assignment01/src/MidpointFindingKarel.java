@@ -1,38 +1,38 @@
 import stanford.karel.Karel;
 
 public class MidpointFindingKarel extends Karel {
-
     public void run() {
         findMid();
     }
-
     void findMid(){
         putBeeperEachSide();
-        turnAround();
-        goToBeeper();
-        putBeeperDown();
-        clearRightBeeper();
-        clearLeftBeeper();
-//        if(rightIsClear()){
-        cameToCenter();
-//        }
-        if (rightIsClear()){
+       if (beepersPresent()){
+           goToBeeper();
+           putBeeperDown();
+           clearRightBeeper();
+           clearLeftBeeper();
+           cameToCenter();
+       }
+        if (facingWest()){
             turnAround();
         }
     }
+
     void cameToCenter(){
         turnAround();
-         goToBeeper();
+        goToBeeper();
         move();
     }
+
     void  clearRightBeeper(){
-       while (frontIsClear()){
-           move();
-           if(beepersPresent()) {
-               pickBeeper();
-           }
-       }
+        while (frontIsClear()){
+            move();
+            if(beepersPresent()) {
+                pickBeeper();
+            }
+        }
     }
+
     void clearLeftBeeper(){
         turnAround();
         goToBeeper();
@@ -41,8 +41,8 @@ public class MidpointFindingKarel extends Karel {
             move();
             pickBeeper();
         }
-
     }
+
     void putBeeperDown(){
         while (noBeepersPresent()){
             putBeeper();
@@ -57,14 +57,18 @@ public class MidpointFindingKarel extends Karel {
             move();
         }
         goBackWard();
-
     }
+
     void putBeeperEachSide(){
         putBeeper();
+        move();
         while(frontIsClear()){
             move();
+            if (frontIsBlocked()){
+                putBeeper();
+            }
         }
-        putBeeper();
+        turnAround();
     }
 
     void goBackWard(){
@@ -72,10 +76,10 @@ public class MidpointFindingKarel extends Karel {
         move();
         turnAround();
     }
+
     void turnAround(){
         turnLeft();
         turnLeft();
     }
-
 }
 

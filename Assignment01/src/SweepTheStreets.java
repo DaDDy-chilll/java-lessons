@@ -5,6 +5,7 @@ public class SweepTheStreets extends Karel {
     public void run() {
         sweepAllStreets();
     }
+
     void sweepAllStreets () {
             while (leftIsClear()){
                 cleanAllBeeper();
@@ -15,6 +16,7 @@ public class SweepTheStreets extends Karel {
             turnLeft();
             turnLeft();
     }
+
     void cleanAllBeeper() {
                 goForward();
                 turnToBack();
@@ -22,24 +24,7 @@ public class SweepTheStreets extends Karel {
                 goToTop();
     }
 
-    void goForward () {
-        while(frontIsClear()){
-            isPickBeeper();
-            move();
-
-        }
-    }
-    void isPickBeeper(){
-        if(beepersPresent()){
-            pickBeeper();
-        }
-    }
-    void turnToBack() {
-        while (notFacingWest()){
-            turnLeft();
-        }
-    }
-    void goToTop(){
+    void goToTop() {
         while(notFacingNorth()){
             turnLeft();
         }
@@ -48,7 +33,26 @@ public class SweepTheStreets extends Karel {
         turnToRight();
     }
 
-    void turnToRight()  {
+    void turnToBack() {
+        while (notFacingWest()){
+            turnLeft();
+        }
+    }
+
+    void goForward () {
+        while(frontIsClear()){
+            isPickBeeper();
+            move();
+        }
+    }
+
+    void isPickBeeper() {
+        if(beepersPresent()){
+            pickBeeper();
+        }
+    }
+
+    void turnToRight() {
         turnLeft();
         turnLeft();
         turnLeft();

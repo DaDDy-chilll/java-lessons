@@ -35,9 +35,7 @@ public class CheckerboardKarel extends Karel {
                 isPutBeeper();
             }else {
               nextLane();
-
             }
-
         }
     }
 
@@ -47,15 +45,13 @@ public class CheckerboardKarel extends Karel {
             while (frontIsClear()){
                 move();
                 goToFrontForEven();
-
             }
             if (rightIsBlocked()){
                 turnRight();
             }
         }
-
-
     }
+
     void nextLane(){
         if (facingWest()){
             if (rightIsClear()){
@@ -84,9 +80,7 @@ public class CheckerboardKarel extends Karel {
                  turnLeft();
              }
          }
-
     }
-
 
     void isPutBeeper(){
         if (noBeepersPresent()){
@@ -101,14 +95,9 @@ public class CheckerboardKarel extends Karel {
         }
     }
 
-
-
-
-
     void turnRight(){
         for (int i = 0; i < 3; i++) {
             turnLeft();
-
         }
     }
 

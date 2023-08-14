@@ -1,7 +1,6 @@
 import stanford.karel.Karel;
 
 public class StoneMasonKarel extends Karel {
-
     public void run() {
      stoneMason();
     }
@@ -13,28 +12,32 @@ public class StoneMasonKarel extends Karel {
         }
         fillStone();
     }
+
     void fillStone(){
         goToTop();
         goToBottom();
     }
+
     void goToTop() {
         turnLeft();
         goForward();
     }
+
     void goToBottom(){
         turnLeft();
         turnLeft();
         goForward();
         turnLeft();
     }
+
     void goForward(){
         isPutBeeper();
         while (frontIsClear()){
             isPutBeeper();
             move();
-
         }
     }
+
     void isPutBeeper() {
         if(noBeepersPresent()){
             putBeeper();
@@ -46,5 +49,4 @@ public class StoneMasonKarel extends Karel {
             move();
         }
     }
-
 }

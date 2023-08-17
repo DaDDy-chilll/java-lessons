@@ -7,30 +7,28 @@ public class VersionChecker extends ConsoleProgram {
     }
 
     private void checkAnswer(String value) {
-        switch (value){
-            case "react":
+        switch (value) {
+            case "react" -> {
                 String react_version = "18.2.0";
                 println("React latest Version is: " + react_version);
-                return;
-            case "node":
+            }
+            case "node" -> {
                 String node_version = "18.17.1";
                 println("Node latest Version is: " + node_version);
-                return;
-            case "next":
+            }
+            case "next" -> {
                 String next_version = "13.4.17";
                 println("Next latest Version is: " + next_version);
-                return;
-            case "express":
+            }
+            case "express" -> {
                 String express_version = "4.18.2";
                 println("Express latest Version is: " + express_version);
-                return;
-            case "mongodb":
+            }
+            case "mongodb" -> {
                 String mongodb_version = "7.0";
                 println("Mongodb latest Version is: " + mongodb_version);
-                return;
-            default:
-                println("Thanks For Coming....!");
-
+            }
+            default -> println("Thanks For Coming....!");
         }
     }
 }

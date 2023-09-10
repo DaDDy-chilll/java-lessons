@@ -1,15 +1,22 @@
 import acm.program.ConsoleProgram;
 
 public class Two6SidedDice extends ConsoleProgram {
-     int START_VALUE = 1;
-     int SECOND_VALUE = 1;
+    final int sides = 6;
     public void run() {
-        oneToSixForRow();
+        firstDice();
     }
-    void oneToSixForRow () {
-        for (int i = 0; i < 6; i++) {
-            SECOND_VALUE+=i;
-            println(START_VALUE+','+SECOND_VALUE);
+
+    void firstDice() {
+        for (int dice1 = 1; dice1 <= sides; dice1++) {
+            secondDice(dice1);
+            println();
+        }
+    }
+
+    void secondDice (int dice1) {
+        for (int dice2 = 1; dice2 <= sides; dice2++) {
+            int total = dice1 + dice2;
+            print("(" + dice1 + ", " + dice2 + ")"+"\t");
         }
     }
 }

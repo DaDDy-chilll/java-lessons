@@ -6,6 +6,7 @@ public class SmallestAndLargest extends ConsoleProgram {
 
         int min = 0;
         int max = 0;
+        int temp = 0;
 
         println("This program finds the largest and smallest number");
 
@@ -17,7 +18,8 @@ public class SmallestAndLargest extends ConsoleProgram {
             }
             if (number > max) {
                 max = number;
-               if (max < min) {
+//                temp = max;
+               if (min == 0 || min < number) {
                    min = max;
                }
             }

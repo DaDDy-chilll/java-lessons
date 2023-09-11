@@ -19,8 +19,8 @@ public class SmallestAndLargest extends ConsoleProgram {
             if (number > max) {
                 max = number;
 //                temp = max;
-               if (min == 0 || min < number) {
-                   min = max;
+               if (min == 0 || min > number) {
+                   min = number;
                }
             }
 

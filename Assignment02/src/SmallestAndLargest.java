@@ -22,7 +22,7 @@ public class SmallestAndLargest extends ConsoleProgram {
             }
         }
         if ((min + max) == 0) {
-            println("No largest or smallest to be choose since you have entered no values");
+            println("No largest or smallest to be choose since you have entered no values!");
         } else {
             println("Smallest number: " + min);
             println("Largest number: " + max);

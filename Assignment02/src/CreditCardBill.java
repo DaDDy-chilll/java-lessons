@@ -12,7 +12,6 @@ public class CreditCardBill extends ConsoleProgram {
         while (balance > 0) {
             double interest = balance * (monthlyInterestRate / 100);
             balance = (balance - monthlyPayment) + interest;
-            System.out.println(balance);
 
             if (balance > 0 ) {
                 tempBalance = balance;

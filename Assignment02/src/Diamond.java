@@ -13,6 +13,7 @@ public class Diamond extends ConsoleProgram {
         char starChar = '*';
 
         int middle = width / 2;
+        int next = middle-1;
         for (int i = 0; i < width; i++) {
             if (i >= 1 && i <= (width -2)){
                 if (i < middle){
@@ -36,12 +37,13 @@ public class Diamond extends ConsoleProgram {
                         for (int j = 0; j < i - middle +1 ; j++) {
                             print(starChar);
                         }
-                        for (int j = 0; j <   2 * (width - i) - 1; j++) {
+                        for (int j = 0; j <  2 * next - 1; j++) {
                             print(spaceChar);
                         }
                         for (int j = 0; j < i - middle +1 ; j++) {
                             print(starChar);
                         }
+                        next--;
                     }
                 }
             }else{

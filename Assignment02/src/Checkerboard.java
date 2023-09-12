@@ -12,10 +12,8 @@ public class Checkerboard extends GraphicsProgram {
     public void run(){
         int boardWidth = NUM_COLS * SQUARE_SIZE;
         int boardHeight = NUM_ROWS * SQUARE_SIZE;
-
         int screenWidth = getWidth();
         int screenHeight = getHeight();
-
         int xOffset = (screenWidth - boardWidth) / 2;
         int yOffset = (screenHeight - boardHeight) / 2;
 
@@ -30,16 +28,18 @@ public class Checkerboard extends GraphicsProgram {
                 add(square);
 
                 if ((row + col) % 2 == 0 && row < 3) {
-                    GOval checker = new GOval(x + (SQUARE_SIZE - CHECKER_SIZE) / 2,
-                            y + (SQUARE_SIZE - CHECKER_SIZE) / 2, CHECKER_SIZE, CHECKER_SIZE);
+                    int checkerX = x + (SQUARE_SIZE - CHECKER_SIZE) / 2;
+                    int checkerY = y + (SQUARE_SIZE - CHECKER_SIZE) / 2;
+                    GOval checker = new GOval(checkerX, checkerY, CHECKER_SIZE, CHECKER_SIZE);
                     checker.setFilled(true);
                     checker.setColor(Color.RED);
                     add(checker);
                 }
 
                 if ((row + col) % 2 == 0 && row > 4) {
-                    GOval checker = new GOval(x + (SQUARE_SIZE - CHECKER_SIZE) / 2,
-                            y + (SQUARE_SIZE - CHECKER_SIZE) / 2, CHECKER_SIZE, CHECKER_SIZE);
+                    int checkerX = x + (SQUARE_SIZE - CHECKER_SIZE) / 2;
+                    int checkerY = y + (SQUARE_SIZE - CHECKER_SIZE) / 2;
+                    GOval checker = new GOval(checkerX,checkerY, CHECKER_SIZE, CHECKER_SIZE);
                     checker.setFilled(true);
                     checker.setColor(Color.BLACK);
                     add(checker);

@@ -8,7 +8,6 @@ public class Pyramid extends GraphicsProgram {
     public  void run() {
         int screenWidth = getWidth();
         int screenHeight = getHeight();
-
         int pyramidWidth = BRICKS_IN_BASE * BRICK_WIDTH;
 
         for (int row = 0; row < BRICKS_IN_BASE; row++) {

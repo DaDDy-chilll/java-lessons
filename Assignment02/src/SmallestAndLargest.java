@@ -1,44 +1,31 @@
 import acm.program.ConsoleProgram;
 
 public class SmallestAndLargest extends ConsoleProgram {
+    int sentinel = 0;
+    int min = 0;
+    int max = 0;
     public void  run(){
-        int sentinel = 0;
-
-        int min = 0;
-        int max = 0;
-        int temp = 0;
-
         println("This program finds the largest and smallest number");
 
         while (true) {
             int number = readInt("?");
 
             if (number == sentinel) {
-                break; // Exit the loop when the sentinel is entered
-            }
-            if (number > max) {
+                break;
+            }else if (number > max) {
                 max = number;
-//                temp = max;
                if (min == 0 || min > number) {
                    min = number;
                }
-            }
-
-            if (number < min) {
+            }else if (number < min) {
                 min = number;
             }
-
-
         }
-
         if ((min + max) == 0) {
-            println("No valid numbers entered.");
+            println("No largest or smallest to be choose since you have entered no values");
         } else {
             println("Smallest number: " + min);
             println("Largest number: " + max);
         }
     }
-
-    // Set the sentinel value
-
 }

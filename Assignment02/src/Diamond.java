@@ -13,46 +13,80 @@ public class Diamond extends ConsoleProgram {
         char starChar = '*';
 
         int middle = width / 2;
-
         for (int i = 0; i < width; i++) {
-            for (int j =0; j < width; j++) {
-                if(i == 2 || i != (width -1)){
-                    if (j == middle){
-                        for (int k = 0; k < 2 * i + 1 ; k++) {
-                            print(spaceChar);
-                        }
-                        middle-=1;
-                    }else {
+            if (i >= 1 && i <= (width -2)){
+                if (i < middle){
+                    for (int j = 0; j < middle - i + 1; j++) {
                         print(starChar);
                     }
-                }else {
+                    for (int j = 0; j < 2 * i -1; j++) {
+                        print(spaceChar);
+                    }
+                    for (int j = 0; j < middle - i + 1; j++) {
+                        print(starChar);
+                    }
+                }else{
+                    if( i == middle){
+                        print(starChar);
+                        for (int j = 0; j < 2 * i -1; j++) {
+                            print(spaceChar);
+                        }
+                        print(starChar);
+                    }else {
+                        for (int j = 0; j < i - middle +1 ; j++) {
+                            print(starChar);
+                        }
+                        for (int j = 0; j <   2 * (width - i) - 1; j++) {
+                            print(spaceChar);
+                        }
+                        for (int j = 0; j < i - middle +1 ; j++) {
+                            print(starChar);
+                        }
+                    }
+                }
+            }else{
+                for (int j = 0; j < width; j++) {
                     print(starChar);
                 }
             }
             println();
         }
-
 //        for (int i = 0; i < width; i++) {
-//            for (int j = 0; j < width; j++) {
-//                print(starChar);
+//            if (i < middle){
+//               if (i >= 1 && i <= (width -2)){
+//                   for (int j = 0; j < middle - i + 1; j++) {
+//                       print(starChar);
+//                   }
+//                   for (int j = 0; j < 2 * i -1; j++) {
+//                       print(spaceChar);
+//                   }
+//                   for (int j = 0; j < middle - i + 1; j++) {
+//                       print(starChar);
+//                   }
+//               }else {
+//                   for (int j = 0; j < width; j++) {
+//                       print(starChar);
+//                   }
+//               }
+//            }else {
+//                if( i == middle){
+//                    print(starChar);
+//                    for (int j = 0; j < 2 * i -1; j++) {
+//                        print(spaceChar);
+//                    }
+//                    print(starChar);
+//                }else {
+//                    for (int j = 0; j < i - middle +1 ; j++) {
+//                        print(starChar);
+//                    }
+//                    for (int j = 0; j < 2 * i -1; j++) {
+//                        print(spaceChar);
+//                    }
+//                    for (int j = 0; j < i - middle +1 ; j++) {
+//                        print(starChar);
+//                    }
+//                }
 //            }
-//
-//            for (int j = 0; j < 2 * i + 1; j++) {
-//                print(starChar);
-//            }
-//
-//            println();
-//        }
-
-//        for (int i = halfWidth; i >= 0; i--) {
-//            for (int j = 0; j < halfWidth - i; j++) {
-//                print(spaceChar);
-//            }
-//
-//            for (int j = 0; j < 2 * i + 1; j++) {
-//                print(starChar);
-//            }
-//
 //            println();
 //        }
     }

@@ -16,10 +16,8 @@ public class Pyramid extends GraphicsProgram {
             int yOffset = screenHeight - (row + 1) * BRICK_HEIGHT;
 
             for (int brick = 0; brick < bricksInRow; brick++) {
-                int x = xOffset + brick * BRICK_WIDTH;
-                int y = yOffset;
-
-                GRect brickRect = new GRect(x, y, BRICK_WIDTH, BRICK_HEIGHT);
+                int brickX = xOffset + brick * BRICK_WIDTH;
+                GRect brickRect = new GRect(brickX, yOffset, BRICK_WIDTH, BRICK_HEIGHT);
                 add(brickRect);
             }
         }

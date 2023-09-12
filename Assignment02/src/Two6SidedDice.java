@@ -13,7 +13,6 @@ public class Two6SidedDice extends ConsoleProgram {
     }
     void secondDice (int dice1) {
         for (int dice2 = 1; dice2 <= sides; dice2++) {
-            int total = dice1 + dice2;
             print("(" + dice1 + ", " + dice2 + ")"+"\t");
         }
     }

@@ -19,8 +19,8 @@ public class BreakOut extends GraphicsProgram {
     //Ball
     private final int BALL_RADIUS = 10; //Ball width
     //Brick
-    final int BRICKS_PER_ROW = 1; // one row 10 columns
-    final int BRICK_ROWS = 1; // 10 rows
+    final int BRICKS_PER_ROW = 10; // one row 10 columns
+    final int BRICK_ROWS = 10; // 10 rows
     final int BRICK_GAP = 4; // space between bricks
     final int BRICK_WIDTH =  (APPLICATION_WIDTH - (BRICKS_PER_ROW - 1) * BRICK_GAP) / BRICKS_PER_ROW - 2; // a Brick width
     final int BRICK_HEIGHT = 8; // a brick height

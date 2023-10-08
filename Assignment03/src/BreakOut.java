@@ -19,16 +19,16 @@ public class BreakOut extends GraphicsProgram {
     //Ball
     private final int BALL_RADIUS = 10; //Ball width
     //Brick
-    final int BRICKS_PER_ROW = 10; // one row 10 columns
-    final int BRICK_ROWS = 10; // 10 rows
+    final int BRICKS_PER_ROW = 1; // one row 10 columns
+    final int BRICK_ROWS = 1; // 10 rows
     final int BRICK_GAP = 4; // space between bricks
     final int BRICK_WIDTH =  (APPLICATION_WIDTH - (BRICKS_PER_ROW - 1) * BRICK_GAP) / BRICKS_PER_ROW - 2; // a Brick width
     final int BRICK_HEIGHT = 8; // a brick height
     final int BRICK_Y_OFFSET = 30;//Brick position
     private int TURNS = 3; // how many play round
-    private GRect paddle;
-    private GOval ball;
-    private GRect brick;
+    private Paddle paddle;
+    private Ball ball;
+    private Brick brick;
 
     private double vx;
     private double vy;
@@ -38,6 +38,8 @@ public class BreakOut extends GraphicsProgram {
     public void run(){
         setSize(APPLICATION_WIDTH,APPLICATION_HEIGHT);
         setupGame();
+        waitForClick();
+        initVelocity();
 
        while (TURNS > 0){
            moveBall();
@@ -56,6 +58,7 @@ public class BreakOut extends GraphicsProgram {
     }
 
     private void resetGame(){
+        brickCount=0;
         removeAll();
         setupGame();
     }
@@ -67,14 +70,10 @@ public class BreakOut extends GraphicsProgram {
         addMouseListeners();
     }
 
+    //Ball
     private void setupBall() {
-        ball = new GOval(200, 300, BALL_RADIUS * 2, BALL_RADIUS * 2);
-        ball.setFilled(true);
+        ball = new Ball(200,300);
         add(ball);
-    }
-
-    public void mouseClicked(MouseEvent e){
-        initVelocity();
     }
 
     void initVelocity() {
@@ -84,20 +83,22 @@ public class BreakOut extends GraphicsProgram {
         if (rgen.nextBoolean(0.5)) vx = -vx;
 
     }
-
     void moveBall() {
         int delay = 15;
         while (true) {
             ball.move(vx, vy);
             pause(delay);
-            if ((ball.getX() + BALL_RADIUS * 2) >= getWidth() || ball.getX() <= 0) {
+            if(ball.isOutOfBounds(getWidth())){
                 vx = -vx;
             }
-            if (ball.getY() < 0) {
+
+            if(ball.hitsTopWall()){
                 vy = -vy;
             }
+
             GObject collider = getCollidingObject();
-            if(brickCount <= 0){
+
+            if(brickCount == 0){
                 TURNS=3;
                 removeAll();
                 gameWinOrLose("Your victory! Click to play again.");
@@ -117,11 +118,11 @@ public class BreakOut extends GraphicsProgram {
         }
     }
 
+    //Paddle
     private void setPaddle () {
         double x = getWidth() / 2 - PDL_WIDTH / 2;
         double y =  getHeight() - PDL_Y_OFFSET - PDL_HEIGHT;
-        paddle = new GRect(x,y,PDL_WIDTH,PDL_HEIGHT);
-        paddle.setFilled(true);
+        paddle = new Paddle(x,y,PDL_WIDTH,PDL_HEIGHT);
         add(paddle);
     }
 

@@ -1,9 +1,13 @@
+import java.util.ArrayList;
+
 public class BuyTransaction {
     private int id;
     private double amount;
     private int delay ;
     private String type;
     private String payOrGet;
+
+    private ArrayList<Tree> trees;
 
     public BuyTransaction(int id, double amount, String type, String payOrGet){this(id,amount,type,4,payOrGet);}
     public BuyTransaction(int id, double amount, String type, int delay, String payOrGet){

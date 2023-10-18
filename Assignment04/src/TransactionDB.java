@@ -36,14 +36,15 @@ public class TransactionDB {
     }
 
 
-    public LinkedList<BuyTransaction> getAllDebit() {
+    public ArrayList<BuyTransaction> getAllDebit() {
           ArrayList<BuyTransaction> debitTransaction = new ArrayList<>();
         for (int i = 0; i < getBuyTransactionSize(); i++) {
+            String isDebit = allBuyTransactions.get(i).getType();
+            if(!"debit".equals(isDebit)) continue;
             BuyTransaction singleDebit = allBuyTransactions.get(i);
-            if (getDebit(i)) {
-                debitTransaction.add(singleDebit);
-            }
+            debitTransaction.add(singleDebit);
         }
+        return debitTransaction;
     }
 
     public boolean getDebit(int i){return getAllBuyTransactions(i).contains("debit");}

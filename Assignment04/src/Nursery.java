@@ -1,8 +1,5 @@
 import acm.program.ConsoleProgram;
 
-import java.util.ArrayList;
-import java.util.Objects;
-
 
 public class Nursery extends ConsoleProgram {
     private double totalPrice;
@@ -15,7 +12,7 @@ public class Nursery extends ConsoleProgram {
     private final static String BALANCE = BUY;
 
    Stock stock = new Stock();
-   TransactionDB transaction = new TransactionDB();
+   TransactionDB transactionDB = new TransactionDB();
    UniqueID id = new UniqueID();
    Balance balance = new Balance();
 
@@ -30,6 +27,8 @@ public class Nursery extends ConsoleProgram {
             println();
 
             if(DISPLAY.equals(mainMenu)){
+                println("This tress is available in our stock.");
+                println();
                 if(stock.getSize() > 0){
                     println("name \t" + "Stock \t" + "Buy Price \t " + "Sell Price" );
                     for (int i = 0; i < stock.getSize(); i++) {
@@ -41,16 +40,18 @@ public class Nursery extends ConsoleProgram {
                     println();
                 }
 
-                String subMenu = readLine( "You want to buy tree as "+ "\"" + BUY+ " or Exist " + "\""+ STOP+ "\" "+": ");
-                println();
+               while(true){
+                   String subMenu = readLine( "You want to buy tree as "+ "\"" + BUY+ " or Exist " + "\""+ STOP+ "\" "+": ");
+                   println();
 
-                if(BUY.equals(subMenu)){
-                    buyTree();
-                } else if (STOP.equals(subMenu)) {
-                    continue;
-                }else {
-                    println("Your Input is Invalid!");
-                }
+                   if(BUY.equals(subMenu)){
+                       buyTree();
+                   } else if (STOP.equals(subMenu)) {
+                       break;
+                   }else {
+                       println("Your Input is Invalid!");
+                   }
+               }
 
             } else if (BALANCE.equals(mainMenu)) {
                 println("Your Main Balance " + balance.getBalance());
@@ -58,8 +59,8 @@ public class Nursery extends ConsoleProgram {
             } else if (TRANSACTION.equals(mainMenu)) {
                 println("id\t"+"amount\t"+"pay type\t"+"delay\t" + "pay or get");
 
-                for (int i = 0; i < transaction.getsize(); i++) {
-                    println(transaction.getAllTransactions(i));
+                for (int i = 0; i < transactionDB.getBuyTransactionSize(); i++) {
+                    println(transactionDB.getAllBuyTransactions(i));
                 }
                 println();
                 getAllDebit();
@@ -70,79 +71,91 @@ public class Nursery extends ConsoleProgram {
     }
 
     public void buyTree() {
+        String addOrExit;
         while (true){
             String name = readLine("Name: ");
             double buyPrice = readDouble("buyPrice: ");
             double sellPrice = readDouble("sellPrice: ");
             int quantity = readInt("quantity: ");
             stock.addStock(name,buyPrice,sellPrice,quantity);
-            String addOrExit = readLine("Want to more buy "+ "\""+ BUY+ "\""+ " or Exit "+ "\""+ STOP  + "\""+ ": ");
-            println();
-            if(BUY.equals(addOrExit)){
-                continue;
-            }else if (STOP.equals(addOrExit)) {
-                print("name \t" + "Stock \t" + "Buy Price \t " + "Sell Price\n" );
-                for (int i = 0; i < stock.getSize(); i++) {
-                    totalPrice += stock.getPrice(i);
-                    println(stock.getAllStock(i));
+            transactionDB.setStockTransactions(new Tree(name,buyPrice,sellPrice,quantity));
+            while (true){
+                 addOrExit = readLine("Want to more buy "+ "\""+ BUY+ "\""+ " or Exit "+ "\""+ STOP  + "\""+ ": ");
+                println();
+                if(BUY.equals(addOrExit)){
+                    break;
+                }else if (STOP.equals(addOrExit)) {
+                   if(transactionDB.getStockTransactinsSize() > 0){
+                       print("name \t" + "Stock \t" + "Buy Price \t " + "Sell Price\n" );
+                       for (int i = 0; i < transactionDB.getStockTransactinsSize(); i++) {
+                           totalPrice += transactionDB.getSingleStockTransactionsBuyPrice(i);
+                           println(transactionDB.getStockTransactions(i));
+                       }
+                       println("Total Buy Price is: " + totalPrice);
+                       println();
+                       payment();
+                   }
+                    totalPrice=0;
+                    break;
+                }else{
+                    println("Your Input is Valid.Please Try again!");
+                    println();
                 }
-                println("Total Buy Price is: " + totalPrice);
-                println();
-                payment();
-                break;
-            }else{
-                println("Your Input is Valid.Please Try again!");
-                println();
-                continue;
             }
-
+            if(STOP.equals(addOrExit)){
+                System.out.print("exist true");
+                break;
+            };
         }
 
     }
 
     public void payment(){
-
+        while (true){
             String payment = readLine("Want to pay as credit "+ "\""+ CREDIT + "\""+ " or  debit "+ "\""+ DEBIT + "\"" +" ");
-
             if(CREDIT.equals(payment)){
-                transaction.setAllTransactions(new Transaction(id.createID(),totalPrice,"credit",0,"paid"));
+                transactionDB.setBuyTransactions(new BuyTransaction(id.createID(),totalPrice,"credit",0,"paid"));
                 balance.decreaseBalance(totalPrice);
+                transactionDB.removeAllStockTransactions();
                 println("Successfully Buy.");
                 println();
-
+                break;
             } else if (DEBIT.equals(payment)) {
-                transaction.setAllTransactions(new Transaction(id.createID(),totalPrice,"debit","pay"));
+                transactionDB.setBuyTransactions(new BuyTransaction(id.createID(),totalPrice,"debit","pay"));
+                transactionDB.removeAllStockTransactions();
                 println("Successfully Buy. Don't forget to pay to the suppliers");
                 println();
-
+                break;
             }else{
                 println("Your Input is Valid.Please Try again!");
-                println();
-                println("id\t"+"amount\t"+"pay type\t"+"delay/t" + "pay or get");
-                for (int i = 0; i < transaction.getsize(); i++) {
-                    println(transaction.getAllTransactions(i));
-                }
-
             }
+
+        }
 
     }
 
     public void getAllDebit() {
         while(true){
-            String submenu = readLine("Show all debits as " +"\""+ DEBIT + "\"" +": " );
+            String submenu = readLine("Show all debits as " +"\""+ DEBIT + "\"" + " or Exit "+ "\""+ STOP  + "\""+ ": " );
+            println();
             if(DEBIT.equals(submenu)){
-                println("id\t"+"amount\t"+"pay type\t"+"delay/t" + "pay or get");
-                for (int i = 0; i < transaction.getsize(); i++) {
-                    if (getDebit(i)) {
-                        println(transaction.getAllTransactions(i));
-                    }
-                }
-            }else break;
+                println("id\t"+"amount\t"+"pay type\t"+"delay\t" + "pay or get");
+//                for (int i = 0; i < transactionDB.getBuyTransactionSize(); i++) {
+//                    if (getDebit(i)) {
+//                        println(transactionDB.getAllBuyTransactions(i));
+//                    }
+//                }
+                println();
+            }else if(STOP.equals(submenu)){
+                break;
+            }else{
+                println("Your Input is Invalid!");
+            };
 
         }
 
     }
-    public boolean getDebit(int i){return transaction.getAllTransactions(i).contains("debit");}
+
 
     //this is for testing
     public void test(){
@@ -151,16 +164,16 @@ public class Nursery extends ConsoleProgram {
         stock.addStock("kiwi",23.3,43.2,10);
         stock.addStock("pie apple",32.3,53.2,10);
         stock.addStock("watermelon",42.3,43.2,10);
-        transaction.setAllTransactions(new Transaction(id.createID(),323.23,"debit","pay"));
-        transaction.setAllTransactions(new Transaction(id.createID(),3343.3,"credit","paid"));
+        transactionDB.setBuyTransactions(new BuyTransaction(id.createID(),323.23,"debit","pay"));
+        transactionDB.setBuyTransactions(new BuyTransaction(id.createID(),3343.3,"credit","paid"));
 
-        transaction.setAllTransactions(new Transaction(id.createID(),542.3,"debit","pay"));
-        transaction.setAllTransactions(new Transaction(id.createID(),2313.3,"debit","pay"));
+        transactionDB.setBuyTransactions(new BuyTransaction(id.createID(),542.3,"debit","pay"));
+        transactionDB.setBuyTransactions(new BuyTransaction(id.createID(),2313.3,"debit","pay"));
 
-        transaction.setAllTransactions(new Transaction(id.createID(),23334.3,"credit","paid"));
+        transactionDB.setBuyTransactions(new BuyTransaction(id.createID(),23334.3,"credit","paid"));
 //        for (int i = 0; i < transaction.getsize(); i++) {
 //            if (getDebit(i)){
-//                println(transaction.getAllTransactions(i));
+//                println(transaction.getAllBuyTransactions(i));
 //            }
 
 
@@ -172,5 +185,9 @@ public class Nursery extends ConsoleProgram {
 }
 
 
-
+//    println();
+//    println("id\t"+"amount\t"+"pay type\t"+"delay/t" + "pay or get");
+//                for (int i = 0; i < transactionDB.getBuyTransactionSize(); i++) {
+//        println(transactionDB.getAllBuyTransactions(i));
+//        }
 

@@ -1,27 +1,52 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class TransactionDB {
-    ArrayList<Transaction> allTransactions = new ArrayList<>();
+    ArrayList<BuyTransaction> allBuyTransactions = new ArrayList<>();
 
+    LinkedList<Tree> stockTransactions = new LinkedList<>();
 
     public TransactionDB(){};
 
-    public void setAllTransactions(Transaction transaction){
-        allTransactions.add(transaction);
+    public void setBuyTransactions(BuyTransaction buyTransaction){
+        allBuyTransactions.add(buyTransaction);
     }
 
-    public String getAllTransactions(int i){
-        return allTransactions.get(i).getTransactions();
+    public void setStockTransactions(Tree tree){
+        stockTransactions.add(tree);
     }
 
-    public int getsize(){
-        return allTransactions.size();
+    public void removeAllStockTransactions(){
+    stockTransactions.removeAll(stockTransactions);
+    }
+
+    public int getStockTransactinsSize(){return stockTransactions.size();}
+
+    public double getSingleStockTransactionsBuyPrice(int i){return stockTransactions.get(i).getBuyPrice();}
+
+    public String getStockTransactions(int i){
+        return stockTransactions.get(i).getTree();
+    }
+    public String getAllBuyTransactions(int i){
+        return allBuyTransactions.get(i).getTransactions();
+    }
+
+    public int getBuyTransactionSize(){
+        return allBuyTransactions.size();
     }
 
 
-    public String getAllDebit(int i) {
-         return allTransactions.get(i).getType();
+    public LinkedList<BuyTransaction> getAllDebit() {
+          ArrayList<BuyTransaction> debitTransaction = new ArrayList<>();
+        for (int i = 0; i < getBuyTransactionSize(); i++) {
+            BuyTransaction singleDebit = allBuyTransactions.get(i);
+            if (getDebit(i)) {
+                debitTransaction.add(singleDebit);
+            }
+        }
     }
+
+    public boolean getDebit(int i){return getAllBuyTransactions(i).contains("debit");}
 
 
 }

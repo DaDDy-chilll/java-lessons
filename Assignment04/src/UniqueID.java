@@ -8,6 +8,7 @@ public class UniqueID {
     public int createID(){
         return this.id++;
     }
+    public void setId(int id){this.id = id;}
 
 
 }

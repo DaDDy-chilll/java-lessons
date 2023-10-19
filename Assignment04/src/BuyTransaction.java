@@ -24,4 +24,6 @@ public class BuyTransaction {
 
     public String getType(){return this.type;}
 
+    public int getId(){return this.id; }
+
 }

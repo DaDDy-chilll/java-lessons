@@ -8,6 +8,7 @@ public class TransactionDB {
 
     public TransactionDB(){};
 
+    public int getLastBuyTransactionId(int i){return allBuyTransactions.get(i).getId();}
     public void setBuyTransactions(BuyTransaction buyTransaction){
         allBuyTransactions.add(buyTransaction);
     }
@@ -25,7 +26,7 @@ public class TransactionDB {
     public double getSingleStockTransactionsBuyPrice(int i){return stockTransactions.get(i).getBuyPrice();}
 
     public String getStockTransactions(int i){
-        return stockTransactions.get(i).getTree();
+        return stockTransactions.get(i).getTreeForOwner();
     }
     public String getAllBuyTransactions(int i){
         return allBuyTransactions.get(i).getTransactions();

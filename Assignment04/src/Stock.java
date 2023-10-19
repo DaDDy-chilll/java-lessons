@@ -7,13 +7,19 @@ public class Stock {
 
      }
 
-    public String getAllStock(int i){
-             return  this.tree.get(i).getTree();
+    public String getAllStockForOwner(int i){
+             return  this.tree.get(i).getTreeForOwner();
     }
+    public String getAllStockForCutomer(int i){
+             return  this.tree.get(i).getTreeForCustomer();
+    }
+
 
     public Tree getTree(int i){
          return tree.get(i);
     }
+
+    public Tree getLastTree(){return tree.getLast();}
 
     public int getStockQuantity(int i){return tree.get(i).getQuantity();}
 
@@ -21,8 +27,8 @@ public class Stock {
          return this.tree.size();
     }
 
-    public void addStock(String name, double buyPrice, double sellPrice, int quantity){
-        this.tree.add(new Tree(name,buyPrice,sellPrice,quantity));
+    public void addStock(int id,String name, double buyPrice, double sellPrice, int quantity){
+        this.tree.add(new Tree(id,name,buyPrice,sellPrice,quantity));
     }
 
     public String getAllName(int i){return tree.get(i).getName();}

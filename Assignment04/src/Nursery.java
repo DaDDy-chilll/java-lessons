@@ -9,11 +9,12 @@ public class Nursery extends ConsoleProgram {
     private final static String CREDIT = "c";
     private final static String DEBIT = "d";
     private final static String BUY = "b";
-    private final static String DISPLAY = "display";
+    private final static String DISPLAY = DEBIT;
     private final static String TRANSACTION = "t";
     private final static String BALANCE = BUY;
     private final static String OWNER = "o";
     private final static String CUSTOMER = "c";
+    private final static String DETAIL = DEBIT;
 
    Stock stock = new Stock();
    TransactionDB transactionDB = new TransactionDB();
@@ -26,6 +27,7 @@ public class Nursery extends ConsoleProgram {
         test();
         println("Welcome to My Plant Nursery!");
        while (true){
+           println();
            println("If you are a customer, please type "+"\""+ CUSTOMER+ "\".");
            println("If you are a owner, please type "+"\""+ OWNER+ "\".");
            println();
@@ -45,14 +47,26 @@ public class Nursery extends ConsoleProgram {
 
     public void customer(){
         while (true){
-            String mainMenu = readLine("Want to buy tree "+"\""+ BUY+ "\" or "+"Exist " +"\""+ STOP+ "\".");
-            if(BUY.equals(mainMenu)){
+            String mainMenu = readLine("Show all trees "+"\""+ DISPLAY + "\" or "+"Exist " +"\""+ STOP+ "\": ");
+            if(DISPLAY.equals(mainMenu)){
                 println();
+                println("id \t" +"name \t" + "Stock \t"  + "Sell Price" );
                 for (int i = 0; i < stock.getSize(); i++) {
-                    println(stock.getAllStock(i));
+                    println(stock.getAllStockForCutomer(i));
                 }
                 println();
-                buyTree(CUSTOMER);
+                while (true){
+                    String subMenu = readLine("Show Tree detail as "+"\""+ DETAIL + "\" or "+"Buy Tree as " +"\""+ BUY+ "\" or "+"Exist " +"\""+ STOP+ "\": ");
+                    if(DETAIL.equals(subMenu)){
+                        getTreeDetail();
+                    } else if (BUY.equals(subMenu)) {
+                        buyTree(CUSTOMER);
+                    } else if (STOP.equals(subMenu)) {
+                        break;
+                    } else {
+                        println("Your Input is Invalid.");
+                    }
+                }
             } else if (STOP.equals(mainMenu)) {
                 break;
             }else {
@@ -60,12 +74,21 @@ public class Nursery extends ConsoleProgram {
             }
         }
     }
+
+    public void getTreeDetail(){
+        int id = readInt("Input You want to see tree id: ");
+        println();
+        println("id \t" +"name \t" + "Stock \t"  + "Sell Price" );
+        println( stock.getTree(id).getTreeForCustomer());
+        println();
+    }
     public void owner(){
         while (true){
             println("Display Stock as "+"\""+ DISPLAY+ "\".");
             println("Main Balance as " + "\""+ BALANCE+ "\".");
             println("Show All Transactions as "+ "\""+ TRANSACTION+ "\".");
             println("Want to exist as "+ "\""+ STOP+ "\".");
+            println();
             String mainMenu = readLine( "\""+ DISPLAY+ "\", "+ "\""+ BALANCE+ "\", "+ "\""+ TRANSACTION+ "\", "+"\""+ STOP+ "\" "+": ");
             println();
 
@@ -73,9 +96,9 @@ public class Nursery extends ConsoleProgram {
                 println("This tress is available in our stock.");
                 println();
                 if(stock.getSize() > 0){
-                    println("name \t" + "Stock \t" + "Buy Price \t " + "Sell Price" );
+                    println("id \t" +"name \t" + "Stock \t" + "Buy Price \t " + "Sell Price" );
                     for (int i = 0; i < stock.getSize(); i++) {
-                        println(stock.getAllStock(i));
+                        println(stock.getAllStockForOwner(i));
                     }
                     println();
                 }else {
@@ -120,12 +143,14 @@ public class Nursery extends ConsoleProgram {
             String name = readLine("Name: ");
             if(checkTreeName(name) && CUSTOMER.equals(type)) {
                 println("Sorry,Your request Tree have not available in our stock.");
+                println();
                 continue;
             };
             int quantity = readInt("quantity: ");
 
             if (checkStockTree(name,quantity)&& CUSTOMER.equals(type)){
                 println("Sorry,Your request stock is higher than our available stock.");
+                println();
                 continue;
             }
             double buyPrice = 0;
@@ -142,6 +167,7 @@ public class Nursery extends ConsoleProgram {
 //            stock.addStock(name,buyPrice,sellPrice,quantity);//ower
 //            transactionDB.setStockTransactions(new Tree(name,buyPrice,sellPrice,quantity));//ower
             while (true){
+                println();
                  addOrExit = readLine("Want to more buy "+ "\""+ BUY+ "\""+ " or Exit "+ "\""+ STOP  + "\""+ ": ");
                 println();
                 if(BUY.equals(addOrExit)){
@@ -218,17 +244,23 @@ public class Nursery extends ConsoleProgram {
         stock.changeStock(name,quantity);
         for (int i = 0; i < stock.getSize(); i++) {
 //            System.out.println(name.equals(stock.getAllName(i)));
-            System.out.println(stock.getAllName(i).contains(name));
+//            System.out.println(stock.getAllName(i).contains(name));
 
             if (!stock.getAllName(i).contains(name)) continue;
             buyPrice = stock.getTree(i).getBuyPrice();
-            transactionDB.setStockTransactions(new Tree(name,buyPrice,quantity));
+            transactionDB.setStockTransactions(new Tree(id.createID(),name,buyPrice,quantity));
 
         }
     }
     public void buyTreeAsOwner(String name,double buyPrice, double sellPrice, int quantity){
-        stock.addStock(name,buyPrice,sellPrice,quantity);//ower
-        transactionDB.setStockTransactions(new Tree(name,buyPrice,sellPrice,quantity));//ower
+        int treeId;
+         treeId = stock.getLastTree().getId();
+        id.setId(treeId);
+        stock.addStock(id.createID(),name,buyPrice,sellPrice,quantity);
+         treeId = stock.getLastTree().getId();
+        id.setId(treeId);
+        id.setId(0);
+        transactionDB.setStockTransactions(new Tree(id.createID(),name,buyPrice,sellPrice,quantity));//ower
 //        while (true){
 //             addOrExit = readLine("Want to more buy "+ "\""+ BUY+ "\""+ " or Exit "+ "\""+ STOP  + "\""+ ": ");
 //            println();
@@ -256,8 +288,10 @@ public class Nursery extends ConsoleProgram {
 
     public void payment(String type){
         while (true){
-            String payment = readLine("Want to pay as credit "+ "\""+ CREDIT + "\""+ " or  debit "+ "\""+ DEBIT + "\"" +" ");
+            String payment = readLine("Want to pay as credit "+ "\""+ CREDIT + "\""+ " or  debit "+ "\""+ DEBIT + "\"" +": ");
             if(CREDIT.equals(payment)){
+                int transactionId = transactionDB.getLastBuyTransactionId(transactionDB.getBuyTransactionSize()-1);
+                id.setId(transactionId);
                 if(OWNER.equals(type)){
                     transactionDB.setBuyTransactions(new BuyTransaction(id.createID(),totalPrice,"credit",0,"pay"));
                     balance.decreaseBalance(totalPrice);
@@ -315,11 +349,11 @@ public class Nursery extends ConsoleProgram {
 
     //this is for testing
     public void test(){
-        stock.addStock("apple",22.3,23.2,10);
-        stock.addStock("orange",20.3,33.2,10);
-        stock.addStock("kiwi",23.3,43.2,10);
-        stock.addStock("pie apple",32.3,53.2,10);
-        stock.addStock("watermelon",42.3,43.2,10);
+        stock.addStock(id.createID(),"apple",22.3,23.2,10);
+        stock.addStock(id.createID(),"orange",20.3,33.2,10);
+        stock.addStock(id.createID(),"kiwi",23.3,43.2,10);
+        stock.addStock(id.createID(),"pie apple",32.3,53.2,10);
+        stock.addStock(id.createID(),"watermelon",42.3,43.2,10);
 //        transactionDB.setBuyTransactions(new BuyTransaction(id.createID(),323.23,"debit","pay"));
 //        transactionDB.setBuyTransactions(new BuyTransaction(id.createID(),3343.3,"credit","paid"));
 //

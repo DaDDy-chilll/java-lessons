@@ -7,36 +7,30 @@ public class TransactionDB {
     LinkedList<Tree> stockTransactions = new LinkedList<>();
 
     public TransactionDB(){};
-
-    public int getLastBuyTransactionId(int i){return allBuyTransactions.get(i).getId();}
     public void setBuyTransactions(BuyTransaction buyTransaction){
         allBuyTransactions.add(buyTransaction);
     }
-
     public void setStockTransactions(Tree tree){
         stockTransactions.add(tree);
     }
-
     public void removeAllStockTransactions(){
     stockTransactions.removeAll(stockTransactions);
     }
-
-    public int getStockTransactinsSize(){return stockTransactions.size();}
-
+    public int getStockTransactionsSize(){return stockTransactions.size();}
     public double getSingleStockTransactionsBuyPrice(int i){return stockTransactions.get(i).getBuyPrice();}
-
-    public String getStockTransactions(int i){
+    public double getSingleStockTransactionsSellPrice(int i){return stockTransactions.get(i).getSellPrice();}
+    public String getStockTransactionsForOwer(int i){
         return stockTransactions.get(i).getTreeForOwner();
+    }
+    public String getStockTransactionsForCustomer(int i){
+        return stockTransactions.get(i).getTreeForCustomer();
     }
     public String getAllBuyTransactions(int i){
         return allBuyTransactions.get(i).getTransactions();
     }
-
     public int getBuyTransactionSize(){
         return allBuyTransactions.size();
     }
-
-
     public ArrayList<BuyTransaction> getAllDebit() {
           ArrayList<BuyTransaction> debitTransaction = new ArrayList<>();
         for (int i = 0; i < getBuyTransactionSize(); i++) {
@@ -47,8 +41,4 @@ public class TransactionDB {
         }
         return debitTransaction;
     }
-
-    public boolean getDebit(int i){return getAllBuyTransactions(i).contains("debit");}
-
-
 }

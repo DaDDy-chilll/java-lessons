@@ -6,7 +6,7 @@ public class TransactionDB {
 
     LinkedList<Tree> stockTransactions = new LinkedList<>();
 
-    public TransactionDB(){};
+    public TransactionDB(){}
     public void setBuyTransactions(BuyTransaction buyTransaction){
         allBuyTransactions.add(buyTransaction);
     }

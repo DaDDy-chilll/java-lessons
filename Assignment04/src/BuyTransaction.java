@@ -6,7 +6,7 @@ public class BuyTransaction {
     private int delay ;
     private final String type;
     private String payOrGet;
-    private ArrayList<Tree> trees;
+
     public BuyTransaction(int id, double amount, String type, String payOrGet){this(id,amount,type,4,payOrGet);}
     public BuyTransaction(int id, double amount, String type, int delay, String payOrGet){
         this.id = id;
@@ -24,6 +24,4 @@ public class BuyTransaction {
     public double getAmount(){return this.amount;}
     public int getDelay(){return this.delay;}
     public void setDelay(){this.delay--;}
-    public int getId(){return this.id; }
-
 }
